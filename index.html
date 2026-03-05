@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login y Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        #login, #chat {
+            background: white;
+            padding: 20px;
+            width: 300px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        #chat { display: none; }
+        #messages {
+            border: 1px solid #ccc;
+            height: 150px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fafafa;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pantalla de Login -->
+    <div id="login">
+        <h2>User</h2>
+        <input type="text" id="username" placeholder="Escribe tu nombre" style="width:100%; padding:8px;">
+        <br><br>
+        <button onclick="login()" style="width:100%; padding:10px;">Login</button>
+    </div>
+
+    <!-- Pantalla de Chat -->
+    <div id="chat">
+        <h2 id="welcome"></h2>
+        <div id="messages"></div>
+
+        <input type="text" id="msg" placeholder="Escribe un mensaje" style="width:100%; padding:8px;">
+        <br><br>
+        <button onclick="sendMessage()" style="width:100%; padding:10px;">Enviar</button>
+    </div>
+
+    <script>
+        let user = "";
+
+        function login() {
+            const name = document.getElementById("username").value.trim();
+            if (name === "") {
+                alert("Por favor escribe un nombre.");
+                return;
+            }
+
+            user = name;
+
+            document.getElementById("login").style.display = "none";
+            document.getElementById("chat").style.display = "block";
+
+            document.getElementById("welcome").innerText = "Bienvenido, " + user;
+        }
+
+        function sendMessage() {
+            const text = document.getElementById("msg").value.trim();
+            if (text === "") return;
+
+            const messagesDiv = document.getElementById("messages");
+            const newMsg = document.createElement("p");
+            newMsg.innerHTML = `<strong>${user}:</strong> ${text}`;
+            messagesDiv.appendChild(newMsg);
+
+            document.getElementById("msg").value = "";
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+
+</body>
+</html>
