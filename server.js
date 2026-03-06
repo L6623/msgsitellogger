@@ -1,12 +1,26 @@
-{
-  "name": "chat-polling",
-  "version": "1.0.0",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5"
-  }
-}
+import express from "express";
+import cors from "cors";
+
+const app = express();
+const port = process.env.PORT || 3000;
+
+app.use(cors());
+app.use(express.json());
+
+let messages = [];
+
+// Obtener mensajes
+app.get("/messages", (req, res) => {
+    res.json(messages);
+});
+
+// Enviar mensaje
+app.post("/messages", (req, res) => {
+    const msg = req.body;
+    messages.push(msg);
+    res.json({ status: "ok" });
+});
+
+app.listen(port, () => {
+    console.log("Servidor HTTP corriendo en puerto " + port);
+});
