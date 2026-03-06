@@ -1,20 +1,21 @@
-const WebSocket = require("ws");
+import { WebSocketServer } from "ws";
 
-const wss = new WebSocket.Server({ port: 3000 });
+const port = process.env.PORT || 3000;
 
-console.log("Servidor WebSocket corriendo en ws://localhost:3000");
+const wss = new WebSocketServer({ port });
+
+console.log("WebSocket server running on port", port);
 
 wss.on("connection", (ws) => {
     console.log("Nuevo usuario conectado");
 
     ws.on("message", (data) => {
-        const msg = data.toString();
-        console.log("Mensaje recibido:", msg);
+        console.log("Mensaje recibido:", data.toString());
 
-        // Reenviar a todos los clientes
+        // Reenviar a todos
         wss.clients.forEach((client) => {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(msg);
+            if (client.readyState === 1) {
+                client.send(data.toString());
             }
         });
     });
