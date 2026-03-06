@@ -1,7 +1,6 @@
 {
-  "name": "chat-polling",
+  "name": "msgsitellogger",
   "version": "1.0.0",
-  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
