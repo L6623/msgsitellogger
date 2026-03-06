@@ -1,7 +1,7 @@
 {
   "name": "chat-realtime",
   "version": "1.0.0",
-  "description": "Servidor WebSocket para chat en tiempo real",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
