@@ -6,8 +6,10 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Archivo donde se guardarán los mensajes
 const DATA_FILE = path.join(__dirname, "messages.json");
 
+// Cargar mensajes desde archivo
 let messages = [];
 if (fs.existsSync(DATA_FILE)) {
     try {
@@ -18,10 +20,12 @@ if (fs.existsSync(DATA_FILE)) {
     }
 }
 
+// Guardar mensajes en archivo
 function saveMessages() {
     fs.writeFileSync(DATA_FILE, JSON.stringify(messages, null, 2));
 }
 
+// CORS para permitir acceso desde Neocities
 app.use(cors({
     origin: "*",
     methods: ["GET", "POST"],
@@ -30,10 +34,12 @@ app.use(cors({
 
 app.use(express.json());
 
+// Obtener mensajes
 app.get("/messages", (req, res) => {
     res.json(messages);
 });
 
+// Enviar mensaje
 app.post("/messages", (req, res) => {
     try {
         const msg = req.body;
@@ -52,6 +58,7 @@ app.post("/messages", (req, res) => {
     }
 });
 
+// Iniciar servidor
 app.listen(PORT, () => {
     console.log("Servidor corriendo en puerto " + PORT);
 });
