@@ -4,7 +4,12 @@ import cors from "cors";
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(cors({
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"]
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -17,6 +22,7 @@ app.get("/messages", (req, res) => {
 
 // Enviar mensaje
 app.post("/messages", (req, res) => {
+    console.log("Mensaje recibido:", req.body); // <-- IMPORTANTE
     const msg = req.body;
     messages.push(msg);
     res.json({ status: "ok" });
